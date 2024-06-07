@@ -1,0 +1,121 @@
+/* styles/globals.scss */
+
+@import './variables';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.header {
+  background-color: $color-background;
+  color: $color-text;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-name {
+  margin-right: auto;
+}
+
+.nav {
+  margin: 0 10px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  display: inline;
+}
+
+.nav-link {
+  color: $color-text;
+  text-decoration: none;
+  &:hover {
+    color: $color-hover;
+  }
+  &.active {
+    font-weight: 600;
+  }
+}
+
+.main-content {
+  padding: 20px;
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.taskManager {
+  display: flex;
+  flex-direction: column;
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+}
+
+.allDone {
+    align-self: center;
+    margin-top: 10px;
+    width: 40%;
+}
+
+.footer {
+  background-color: $color-background;
+  color: $color-text;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer-logo {
+  display: inline-block;
+  padding: 0 30px;
+  margin-top: 5px;
+  width: 10%;
+  height: auto;
+}
+
+:focus {
+  outline: none;
+}
+
+@layer utilities {
+  .text-balance {
+    //text-wrap: balance;
+  }
+}

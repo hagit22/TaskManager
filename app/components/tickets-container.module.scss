@@ -1,0 +1,61 @@
+/* components/tickets-container.module.scss */
+
+@import '../styles/variables.scss';
+
+.ticketsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.singleTicketContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 50px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.card {
+    border-radius: 6px;
+    padding: 20px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: str;
+    gap: 15px;
+  }
+
+.ticket {
+    border: 1px solid $color-ticket-outline;
+    background-color: $color-ticket;
+    text-align: start;
+}
+
+.bug {
+    border: 1px solid $color-bug-outline;
+    background-color: $color-bug;
+    text-align: start;
+}
+
+.task {
+    border: 1px solid $color-task-outline;
+    text-align: center;
+}
+
+.ticketTitle {
+    font-size: larger;
+    //font-weight: bolder;
+    //margin: 10px 5px;
+}
+
+.taskTitle {
+    background-color: $color-title-background;
+    border-radius: 4px;
+    border: 1px solid $color-title-outline;
+    padding: 5px;
+}
+
+

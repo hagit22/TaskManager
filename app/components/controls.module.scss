@@ -1,0 +1,32 @@
+/* components/controls.module.scss */
+
+@import '../styles/variables.scss';
+
+.controlFrame {
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: whitesmoke;
+  }
+  
+.dateFilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.ticket {
+    color: $color-ticket-outline;
+}
+
+.bug {
+    color: $color-bug-outline;
+}
+
+.none {
+    color: $color-default;
+}
+
+
+

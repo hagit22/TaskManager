@@ -1,0 +1,18 @@
+/* styles/variables.scss */
+
+// colors
+$color-default: black;
+$color-background: #CAF0FB;
+$color-text: #005DAC;
+$color-hover: #F5FBFF;
+$color-ticket: lighten(lightblue, 10%);
+$color-ticket-outline: darken($color-ticket, 30%);
+$color-bug: lighten(pink, 10%);
+$color-bug-outline: darken($color-bug, 20%);
+$color-task-outline: darken(darkgray, 2%);
+$color-title-background: darken(lightyellow, 2%);
+$color-title-outline: lighten(orange, 20%);
+
+
+
+
