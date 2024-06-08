@@ -1,4 +1,4 @@
-import { Ticket, TicketCategory, TicketStatus } from '../../pages/ticket/ticketService';
+import { Ticket, TicketCategory, TicketStatus } from '../../pages/common/appTypes';
 import styles from './tickets-container.module.scss';
 import { utilities } from '../utils/utilities';
 

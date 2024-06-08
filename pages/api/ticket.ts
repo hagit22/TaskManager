@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ticketService } from '../ticket/ticketService'; 
-import { CRUDCodes, StatusCodes, ErrorMessages } from '../common/commonTypes';
+import { ticketServer } from '../ticket/ticketServer'; 
+import { CRUDCodes, StatusCodes, ErrorMessages } from '../common/apiTypes';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     //console.log("Ticket Request:", {method: req.method, /*headers: req.headers, body: req.body*/ query: req.query})
@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const { startDate, endDate } = req.query as { startDate: string, endDate: string };
                 const dateRange = {startDate: new Date(startDate), endDate: new Date(endDate)}
-                const tickets = await ticketService.getTickets(dateRange);
+                const tickets = await ticketServer.getTickets(dateRange);
                 res.status(StatusCodes.OK).json(tickets);
             }
             catch(err) {
@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case CRUDCodes.POST :  
             try {
-                const newTicket = await ticketService.createTicket(req.body);
+                const newTicket = await ticketServer.createTicket(req.body);
                 res.status(StatusCodes.CREATED).json(newTicket);
             }
             catch(err) {
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const { id } = req.query                
                 if (typeof id != 'string')
                     throw('Illegal id')
-                const updatedTicket = await ticketService.updateTicket(id, req.body);
+                const updatedTicket = await ticketServer.updateTicket(id, req.body);
                 res.status(StatusCodes.OK).json(updatedTicket);
             }
             catch(err) {
@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const { id } = req.query
                 if (typeof id != 'string')
                     throw('Illegal id')
-                const newTicket = await ticketService.deleteTicket(id);
+                const newTicket = await ticketServer.deleteTicket(id);
                 res.status(StatusCodes.NO_CONTENT).end();
             }
             catch(err) {

@@ -1,4 +1,4 @@
-import { Ticket } from '../../pages/ticket/ticketService';
+import { Ticket } from '../../pages/common/appTypes';
 import SingleTicketContainer from './single-ticket-container';
 import styles from './tickets-container.module.scss';
 

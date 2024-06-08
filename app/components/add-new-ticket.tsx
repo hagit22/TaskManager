@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, ChangeEvent } from 'react';
-import { TicketCategory } from '../../pages/ticket/ticketService';
+import { TicketCategory } from '../../pages/common/appTypes';
 import styles from './controls.module.scss';
 
 export default function AddNewTicket() {
@@ -13,7 +13,8 @@ export default function AddNewTicket() {
     if (Object.values(TicketCategory).includes(chosenType))
       setTicketType(chosenType)
     else setTicketType(TicketCategory.None)
-  };
+  }
+
   return (
     <section className={styles.controlFrame}>
       <select id="options" value={ticketType} onChange={onTicketTypeChange}>

@@ -1,9 +1,9 @@
 import Axios from 'axios'
-import { Task } from './taskService';
-import { Ticket } from '../ticket/ticketService';
-import { ErrorMessages } from '../common/commonTypes';
+import { Ticket, Task } from '../common/appTypes'
+import { BASE_URL, ErrorMessages } from '../common/apiTypes';
 
-const BASE_URL = '/api/task'
+const BASE_URL_TASK = BASE_URL + '/task'
+
 
 export const taskClient = {
     getTasks,
@@ -19,7 +19,7 @@ var axios = Axios.create({
 
 async function getTasks(filterBy = {}, sortObj = {}) {
     try {
-        var { data: tasks } = await axios.get(BASE_URL, {params : {...filterBy, ...sortObj}})
+        var { data: tasks } = await axios.get(BASE_URL_TASK, {params : {...filterBy, ...sortObj}})
         return tasks
     }
     catch (err) {
@@ -31,7 +31,7 @@ async function getTasks(filterBy = {}, sortObj = {}) {
 async function getTasksForTicket(ticket: Ticket) {
     try {
         //console.log("taskClient: getTasksForTicket number: ",ticket)
-        var { data: tasks } = await axios.get(BASE_URL, {params : { ticket: ticket }})
+        var { data: tasks } = await axios.get(BASE_URL_TASK, {params : { ticket: ticket }})
         return tasks
     }
     catch (err) {
@@ -42,7 +42,7 @@ async function getTasksForTicket(ticket: Ticket) {
 
 async function getById(taskId: string) {
     try {
-        const url = BASE_URL + taskId
+        const url = BASE_URL_TASK + taskId
         var { data: task } = await axios.get(url)
         return task
     }
@@ -54,7 +54,7 @@ async function getById(taskId: string) {
 
 async function remove(taskId: string) {
     try {
-        const url = BASE_URL + taskId
+        const url = BASE_URL_TASK + taskId
         var { data: res } = await axios.delete(url)
         return res
     }
@@ -66,8 +66,8 @@ async function remove(taskId: string) {
 
 async function save(task: Task) {
     try {
-        const method = task._id ? 'put' : 'post'
-        const url = BASE_URL 
+        const method = task.id ? 'put' : 'post'
+        const url = BASE_URL_TASK 
         const { data: savedStory } = await axios[method](url, task)
         return savedStory
     }

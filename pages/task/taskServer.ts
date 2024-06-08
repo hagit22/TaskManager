@@ -1,26 +1,11 @@
 import { LoremIpsum } from "lorem-ipsum";
 import { utilities } from "@/app/utils/utilities";
-import { randomData } from "@/app/utils/randomData";
-import { Ticket, TicketStatus } from "../ticket/ticketService";
+import { genData } from "@/app/utils/dataGenUtil";
+import { Task, TaskStatus, Ticket, TicketStatus } from '../common/appTypes';
+import { ticketServer } from "../ticket/ticketServer";
 
 
-export interface Task {
-    _id: string;
-    title: string;
-    description: string;
-    owner: string;
-    status: TaskStatus;
-    priority: number;
-    ticketId: string;
-}
-
-export enum TaskStatus {
-    New,
-    InProgress,
-    Done
-}
-
-export const taskService = {
+export const taskServer = {
     getTasks,
     getTasksForTicket,
     createTask,
@@ -28,7 +13,7 @@ export const taskService = {
     deleteTask
 }
 
-const MAX_TASKS_PER_TICKET = 6
+const MAX_TASKS_PER_TICKET = 5
 
 
 async function getTasks () {
@@ -36,20 +21,26 @@ async function getTasks () {
   
 async function getTasksForTicket(ticket: Partial<Ticket>) {
     //console.log("taskService: getTasksForTicket number: ",ticket)
-    const taskList = utilities.getRandomUniquesFromList(randomData.taskTitles, MAX_TASKS_PER_TICKET)
-    const tasks: Partial<Task>[] = new Array(taskList.length).fill({});
-    return Promise.resolve(tasks.map ((val: Object, index: number) => 
-        ({
-            _id: index,
+    
+    /*const tasks: Partial<Task>[] = new Array(taskList.length).fill({});
+    return Promise.resolve(tasks.map ((val: Object, index: number) => */
+
+    const defaultTicket = ticketServer.getDefaultTicket()
+    const taskList = utilities.getRandomUniquesFromList(genData.taskTitles, MAX_TASKS_PER_TICKET)
+    let tasks: Array<Task> = []
+    for (let index=0; index<taskList.length; index++) {
+        tasks.push ({
+            id: index.toString(),
             title: taskList[index],
             description: new LoremIpsum().generateSentences(1),
-            owner: ticket.owner,
-            dueDate: ticket.dueDate,
+            owner: ticket.owner || defaultTicket.owner,
             status: _getNewTaskStatus(ticket.status),
-            priority: ticket.priority,
-            ticketId: ticket._id
+            priority: ticket.priority || defaultTicket.priority,
+            ticketId: ticket.id || defaultTicket.id
         })
-    ))
+    }
+    //console.log(JSON.stringify(tasks, null, 2))
+    return Promise.resolve(tasks)
 }
   
 async function createTask (task: Task[]) {

@@ -1,9 +1,9 @@
 import Axios from 'axios'
 import { DateRange } from '../../app/utils/utilities';
-import { Ticket } from './ticketService';
-import { ErrorMessages } from '../common/commonTypes';
+import { Ticket } from '../common/appTypes';
+import { BASE_URL, ErrorMessages } from '../common/apiTypes';
 
-const BASE_URL = '/api/ticket'
+const BASE_URL_TICKET = BASE_URL + '/ticket'
 
 export const ticketClient = {
     getTickets,
@@ -19,7 +19,7 @@ var axios = Axios.create({
 async function getTickets(dateFilter: DateRange) {
     try {
         //console.log("ticketClient: getTickets - DateFilter: ", dateFilter)
-        var { data: tickets } = await axios.get(BASE_URL, {params : dateFilter})
+        var { data: tickets } = await axios.get(BASE_URL_TICKET, {params : dateFilter})
         return tickets
     }
     catch (err) {
@@ -30,7 +30,7 @@ async function getTickets(dateFilter: DateRange) {
 
 async function getById(ticketId: string) {
     try {
-        const url = BASE_URL + ticketId
+        const url = BASE_URL_TICKET + ticketId
         var { data: ticket } = await axios.get(url)
         return ticket
     }
@@ -42,7 +42,7 @@ async function getById(ticketId: string) {
 
 async function remove(ticketId: string) {
     try {
-        const url = BASE_URL + ticketId
+        const url = BASE_URL_TICKET + ticketId
         var { data: res } = await axios.delete(url)
         return res
     }
@@ -54,8 +54,8 @@ async function remove(ticketId: string) {
 
 async function save(ticket: Ticket) {
     try {
-        const method = ticket._id ? 'put' : 'post'
-        const url = BASE_URL 
+        const method = ticket.id ? 'put' : 'post'
+        const url = BASE_URL_TICKET 
         const { data: savedStory } = await axios[method](url, ticket)
         return savedStory
     }

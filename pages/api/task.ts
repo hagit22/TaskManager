@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Ticket } from '../ticket/ticketService';
-import { taskService } from '../task/taskService';
-import { CRUDCodes, StatusCodes, ErrorMessages } from '../common/commonTypes';
+import { Ticket } from '../common/appTypes';
+import { taskServer } from '../task/taskServer';
+import { CRUDCodes, StatusCodes, ErrorMessages } from '../common/apiTypes';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     //console.log("Task Request:", {method: req.method, /*headers: req.headers, body: req.body, query: req.query*/})
@@ -9,11 +9,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case CRUDCodes.GET :
             try {
                 const ticket = { 
-                    _id: req.query['ticket[_id]'], 
+                    id: req.query['ticket[id]'], 
                     title: req.query['ticket[title]'], 
                     ticketCategory: req.query['ticket[ticketCategory]'] 
                 } as Partial<Ticket>
-                const tasks = await taskService.getTasksForTicket(ticket);
+                const tasks = await taskServer.getTasksForTicket(ticket);
 
                 res.status(StatusCodes.OK).json(tasks);
             }
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case CRUDCodes.POST :  
             try {
-                const newTask = await taskService.createTask(req.body);
+                const newTask = await taskServer.createTask(req.body);
                 res.status(StatusCodes.CREATED).json(newTask);
             }
             catch(err) {
@@ -34,10 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case CRUDCodes.PUT :
             try {
-                const { _id } = req.query 
-                if (typeof _id != 'string')
+                const { id } = req.query 
+                if (typeof id != 'string')
                     throw('Illegal id')
-                const updatedTask = await taskService.updateTask(_id, req.body);
+                const updatedTask = await taskServer.updateTask(id, req.body);
                 res.status(StatusCodes.OK).json(updatedTask);
             }
             catch(err) {
@@ -47,10 +47,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case CRUDCodes.DELETE :  
             try {
-                const { _id } = req.query 
-                if (typeof _id != 'string')
+                const { id } = req.query 
+                if (typeof id != 'string')
                     throw('Illegal id')
-                const newTask = await taskService.deleteTask(_id);
+                const newTask = await taskServer.deleteTask(id);
                 res.status(StatusCodes.NO_CONTENT).end();
             }
             catch(err) {

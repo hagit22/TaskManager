@@ -1,15 +1,10 @@
 export const utilities = {
+    formatDate,
     getCurrentWorkWeek,
     getRandomDateInRange,
-    formatDate,
     getRandomValInRange,
     getRandomValInList,
     getRandomUniquesFromList
-}
-
-export interface DateRange {
-    startDate: Date;
-    endDate: Date;
 }
 
 enum Weekday {
@@ -20,6 +15,26 @@ enum Weekday {
     Thursday,
     Friday,
     Saturday
+}
+
+export interface DateRange {
+    startDate: Date;
+    endDate: Date;
+}
+
+export function parseDateRange(key: string, value: any) {
+    if (key == 'startDate' || key == 'endDate') {
+        return new Date(value);
+    }
+    return value;
+}
+
+function formatDate(date: Date) : string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
 }
 
 function getCurrentWorkWeek() : DateRange {
@@ -34,14 +49,6 @@ function getRandomDateInRange(numDays: number): Date {
     const randomDate = new Date();
     randomDate.setDate(randomDate.getDate() + randomDaysInRange);
     return randomDate;
-}
-
-function formatDate(date: Date) : string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); 
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
 }
 
 function getRandomValInRange(range: number): number {

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Ticket } from '../../pages/ticket/ticketService';
-import { Task, TaskStatus } from '@/pages/task/taskService';
+import { Ticket, Task, TaskStatus } from '../../pages/common/appTypes';
 import { taskClient } from '@/pages/task/taskClient';
 import TicketCard from './ticket-card';
 import TaskCard from './task-card';

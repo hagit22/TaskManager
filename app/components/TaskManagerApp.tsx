@@ -1,17 +1,19 @@
 "use client";
 
 import { useState, useEffect } from 'react'; 
-import { DateRange, utilities } from './utils/utilities';
-import { ticketClient } from '../pages/ticket/ticketClient'
-import DateFilter from './components/date-filter'
-import AddNewTicket from './components/add-new-ticket';
-import TicketsContainer from './components/tickets-container';
-import './styles/globals.scss';
+import { DateRange, parseDateRange } from '../utils/utilities';
+import { ticketClient } from '../../pages/ticket/ticketClient'
+import { Ticket } from '../../pages/common/appTypes';
+import DateFilter from './date-filter'
+import AddNewTicket from './add-new-ticket';
+import TicketsContainer from './tickets-container';
 
-export default function TaskManager() {
+export default function TaskManagerApp({ loadedTickets, defaultDateFilter } : { loadedTickets: Ticket[]; defaultDateFilter: string }) {
 
-  const [tickets, setTickets] = useState<Array<any> | null>(null)
-  const [dateFilter, setDateFilter] = useState(utilities.getCurrentWorkWeek())
+  const [tickets, setTickets] = useState(loadedTickets)
+  //const [dateFilter, setDateFilter] = useState(defaultDateFilter)
+  const [dateFilter, setDateFilter] = useState<DateRange>(JSON.parse(defaultDateFilter, parseDateRange));
+  
 
   useEffect( () => {
     loadAppData()
@@ -48,3 +50,4 @@ export default function TaskManager() {
     </section>
   );
 }
+

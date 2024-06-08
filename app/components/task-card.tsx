@@ -1,4 +1,4 @@
-import { Task } from '../../pages/task/taskService';
+import { Task } from '../../pages/common/appTypes';
 import styles from './tickets-container.module.scss';
 
 export default function TaskCard({ taskGroup }: { taskGroup: Task[] }) {

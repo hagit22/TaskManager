@@ -87,7 +87,7 @@ const ownerNames = [
 ];
 
 
-export const randomData = {
+export const genData = {
     ticketTitlesLong,
     ticketTitlesShort,
     bugTitlesLong,
