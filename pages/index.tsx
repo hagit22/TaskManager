@@ -1,7 +1,7 @@
 import { DateRange, utilities } from '../app/utils/utilities';
 import { ticketClient } from './ticket/ticketClient'
 import { Ticket } from './common/appTypes';
-import TaskManagerApp from '../app/components/TaskManagerApp';
+import TaskManagerApp from '../app/components/task-manager-app';
 
 export async function getServerSideProps() {
   const defaultDateFilter = JSON.stringify(utilities.getCurrentWorkWeek())

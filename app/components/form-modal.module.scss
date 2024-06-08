@@ -1,0 +1,85 @@
+/* components/form-modal.module.scss */
+
+@import '../styles/variables.scss';
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+}
+  
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.ticketForm {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 40vw;
+  
+    label {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+    }
+    input, textarea {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .inputRow {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+
+        label {
+            flex: 1;
+        }
+    }    
+    select {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: white;
+    }
+    button {
+        padding: 10px 15px;
+        font-size: 14px;
+        color: white;
+        background-color: $color-ticket-outline;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 120px;
+        align-self: center;
+        margin-top: 30px;
+    }
+    button:hover {
+        background-color: $color-text;
+    }
+}
+  
+  

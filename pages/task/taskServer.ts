@@ -1,8 +1,7 @@
 import { LoremIpsum } from "lorem-ipsum";
 import { utilities } from "@/app/utils/utilities";
 import { genData } from "@/app/utils/dataGenUtil";
-import { Task, TaskStatus, Ticket, TicketStatus } from '../common/appTypes';
-import { ticketServer } from "../ticket/ticketServer";
+import { Task, TaskStatus, Ticket, TicketStatus, getDefaultTicket } from '../common/appTypes';
 
 
 export const taskServer = {
@@ -25,7 +24,7 @@ async function getTasksForTicket(ticket: Partial<Ticket>) {
     /*const tasks: Partial<Task>[] = new Array(taskList.length).fill({});
     return Promise.resolve(tasks.map ((val: Object, index: number) => */
 
-    const defaultTicket = ticketServer.getDefaultTicket()
+    const defaultTicket = getDefaultTicket()
     const taskList = utilities.getRandomUniquesFromList(genData.taskTitles, MAX_TASKS_PER_TICKET)
     let tasks: Array<Task> = []
     for (let index=0; index<taskList.length; index++) {

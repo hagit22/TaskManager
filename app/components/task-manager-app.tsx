@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useEffect } from 'react'; 
-import { DateRange, parseDateRange } from '../utils/utilities';
+import { DateRange, parseDateRange } from '../utils/utilities'
 import { ticketClient } from '../../pages/ticket/ticketClient'
-import { Ticket } from '../../pages/common/appTypes';
+import { Ticket } from '../../pages/common/appTypes'
 import DateFilter from './date-filter'
-import AddNewTicket from './add-new-ticket';
-import TicketsContainer from './tickets-container';
+import AddNewTicket from './add-new-ticket'
+import TicketsContainer from './tickets-container'
 
-export default function TaskManagerApp({ loadedTickets, defaultDateFilter } : { loadedTickets: Ticket[]; defaultDateFilter: string }) {
+export default function TaskManagerApp({ loadedTickets, defaultDateFilter } : 
+  { loadedTickets: Ticket[]; defaultDateFilter: string }) {
 
   const [tickets, setTickets] = useState(loadedTickets)
   //const [dateFilter, setDateFilter] = useState(defaultDateFilter)
   const [dateFilter, setDateFilter] = useState<DateRange>(JSON.parse(defaultDateFilter, parseDateRange));
-  
 
   useEffect( () => {
     loadAppData()
@@ -43,11 +43,11 @@ export default function TaskManagerApp({ loadedTickets, defaultDateFilter } : { 
         <DateFilter initialFilter={dateFilter} onUpdateDates={onUpdateDates}/>
         <AddNewTicket/>
       </div>
-      {tickets==null  ? '' : tickets.length == 0 ?  
+      {tickets==null ? '' : tickets.length == 0 ?  
         <img src='/img/all-done.jpg' className="allDone"/> :
         <TicketsContainer tickets={tickets}/>
       }
     </section>
-  );
+  )
 }
 

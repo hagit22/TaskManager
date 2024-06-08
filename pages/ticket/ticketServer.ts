@@ -11,7 +11,6 @@ export const ticketServer = {
     createTicket,
     updateTicket,
     deleteTicket,
-    getDefaultTicket
 }
 
 const PRIORITY_RANGE = 10
@@ -44,18 +43,6 @@ async function updateTicket (id: string, ticket: Ticket) {
 async function deleteTicket (id: string) {
 }
 
-function getDefaultTicket() {
-    return {
-        id: "-1",
-        title: "",
-        description: "",
-        owner: "",
-        dueDate: new Date(),
-        status: TicketStatus.New,
-        priority: 0,
-        ticketCategory: TicketCategory.None
-    }
-}
 
 
 async function getTicketsDemo (dateRange: DateRange) {

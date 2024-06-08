@@ -18,11 +18,25 @@ export enum TicketCategory {
 }
 
 export enum TicketStatus {
-    New,
-    Approved,
-    Committed,
-    Done
+    New = "New",
+    Approved = "Approved",
+    Committed = "Committed",
+    Done = "Done"
 }
+
+export function getDefaultTicket() {
+    return {
+        id: "-1",
+        title: "",
+        description: "",
+        owner: "",
+        dueDate: new Date(),
+        status: TicketStatus.New,
+        priority: 7,
+        ticketCategory: TicketCategory.None
+    }
+}
+
 
 
 // Task Common Types
