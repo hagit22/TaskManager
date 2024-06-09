@@ -65,11 +65,10 @@
         border-radius: 4px;
         background: white;
     }
-    button {
+    .button {
         padding: 10px 15px;
         font-size: 14px;
         color: white;
-        background-color: $color-ticket-outline;
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -77,8 +76,17 @@
         align-self: center;
         margin-top: 30px;
     }
-    button:hover {
-        background-color: $color-text;
+    .ticket {
+        background-color: $color-ticket-outline;
+    }
+    .ticket:hover {
+        background-color: $color-ticket-hover;
+    }
+    .bug {
+        background-color: $color-bug-outline;
+    }
+    .bug:hover {
+        background-color: $color-bug-hover;
     }
 }
   

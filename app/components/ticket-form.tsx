@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { genData } from '../utils/dataGenUtil';
-import { Ticket, TicketCategory, TicketStatus, getDefaultTicket } from '@/pages/common/appTypes';
+import { Ticket, TicketCategory, TicketStatus } from '@/pages/common/appTypes';
 import { utilities } from '../utils/utilities';
 import styles from './form-modal.module.scss';
 
-export default function TicketForm({ onClose }: { onClose: () => void } ) {
+export default function TicketForm({ initialTicket, ticketType, onAddNewTicket, onClose }: 
+    { initialTicket: Ticket; ticketType: TicketCategory; onAddNewTicket: (ticket: Ticket) => void; onClose: () => void } ) {
   
-    const [ticket, setTicket] = useState(getDefaultTicket())
+    const [ticket, setTicket] = useState(initialTicket)
+
+    useEffect(() => {
+        if (!ticket.ticketCategory)
+            return
+        console.log("New Ticket: ", ticket)        
+        onAddNewTicket(ticket)
+        onClose()
+    }, [ticket.ticketCategory])
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setTicket(prev => ({...prev, ticketCategory: TicketCategory.Ticket}));
-
-        console.log("New Ticket: ", ticket)
-        alert("Ticket '" + ticket.title + "' Saved!!")
-
-        onClose();
+        setTicket(prev => ({...prev, ticketCategory: ticketType}));
     };
 
     const onChangeInput = ({ target }: React.ChangeEvent<HTMLInputElement> ) => {
@@ -87,7 +91,10 @@ export default function TicketForm({ onClose }: { onClose: () => void } ) {
                     </select>
                 </label>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit" 
+                className={`styles.button ${ticketType==TicketCategory.Bug ? styles.bug : styles.ticket}`}>
+                    Submit
+            </button>
         </form>
     );
 }

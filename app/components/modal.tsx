@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import ReactDOM from 'react-dom'
+import { Ticket } from '@/pages/common/appTypes';
 import styles from './form-modal.module.scss';
 
 export default function Modal({ isOpen, onClose, children }: 

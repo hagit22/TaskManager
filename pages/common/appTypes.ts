@@ -26,7 +26,7 @@ export enum TicketStatus {
 
 export function getDefaultTicket() {
     return {
-        id: "-1",
+        id: "",
         title: "",
         description: "",
         owner: "",

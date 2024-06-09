@@ -20,7 +20,8 @@ export enum ErrorMessages {
     GET = 'Failed to fetch ',
     POST = 'Failed to create ',
     PUT = 'Failed to update ',
-    DELETE = 'Failed to delete '
+    DELETE = 'Failed to delete ',
+    SAVE = 'Failed to save '
 }
 
 

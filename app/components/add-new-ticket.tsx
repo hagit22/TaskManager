@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, ChangeEvent } from 'react'
-import { TicketCategory } from '../../pages/common/appTypes'
+import { Ticket, TicketCategory, getDefaultTicket } from '../../pages/common/appTypes'
 import Modal from './modal'
 import TicketForm from './ticket-form'
 import styles from './controls.module.scss'
 
-export default function AddNewTicket() {
+export default function AddNewTicket({ onAddNewTicket } : { onAddNewTicket: (ticket: Ticket) => void } ) {
 
   const [ticketType, setTicketType] = useState(TicketCategory.None) 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +36,8 @@ export default function AddNewTicket() {
           <option value={TicketCategory.Bug} className={styles.bug}>{TicketCategory.Bug}</option>
       </select>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <TicketForm onClose={closeModal} />
+        <TicketForm initialTicket={getDefaultTicket()} ticketType={ticketType} 
+          onAddNewTicket={onAddNewTicket} onClose={closeModal} />
       </Modal>
     </section>
   );

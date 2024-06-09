@@ -17,7 +17,7 @@ const PRIORITY_RANGE = 10
 
 async function getTickets(filterBy: DateRange) {
     try {
-        console.log("ticketServer: getTickets - DateFilter: ", filterBy)
+        //console.log("ticketServer: getTickets - DateFilter: ", filterBy)
         const collection = await dbService.getCollection(COLLECTION)
 
         const ticketCursor = await collection.find(
@@ -34,7 +34,17 @@ async function getTickets(filterBy: DateRange) {
     }
 }
   
-async function createTicket (ticket: Ticket[]) {
+async function createTicket (ticket: Ticket) {
+    try {
+        console.log("\n\n****** Got Create Ticket: ******\n\n", ticket)
+        const collection = await dbService.getCollection(COLLECTION)
+        const { acknowledged, insertedId } = await collection.insertOne(ticket)
+        return acknowledged ? insertedId : `Did not add ticket`
+    }
+    catch(err) {
+        console.log("ticketServer: Had problems adding tickets ",err)
+        throw err
+    }
 }
 
 async function updateTicket (id: string, ticket: Ticket) {

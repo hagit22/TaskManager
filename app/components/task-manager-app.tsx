@@ -37,11 +37,21 @@ export default function TaskManagerApp({ loadedTickets, defaultDateFilter } :
     setDateFilter(dateRange)
   }
 
+  async function onAddNewTicket(newTicket: Ticket) {
+    try {
+      setTickets(prev => [newTicket, ...prev])
+      const savedTicket = await ticketClient.save(newTicket)
+    }
+    catch(err) {
+      console.log("onAddNewTicket Error: ",err)
+    }
+  }
+
   return (
     <section className="taskManager">
       <div className="control">
         <DateFilter initialFilter={dateFilter} onUpdateDates={onUpdateDates}/>
-        <AddNewTicket/>
+        <AddNewTicket onAddNewTicket={onAddNewTicket}/>
       </div>
       {tickets==null ? '' : tickets.length == 0 ?  
         <img src='/img/all-done.jpg' className="allDone"/> :

@@ -47,8 +47,8 @@ async function getById(taskId: string) {
         return task
     }
     catch (err) {
-        console.log(ErrorMessages.GET + 'single task' + '==> client: ',taskId,'\n error: ',err)
-        throw new Error(ErrorMessages.GET + 'single task- ' + taskId);
+        console.log(ErrorMessages.DELETE + 'single task' + '==> client: ',taskId,'\n error: ',err)
+        throw new Error(ErrorMessages.DELETE + 'single task- ' + taskId);
     }
 }
 
@@ -59,8 +59,8 @@ async function remove(taskId: string) {
         return res
     }
     catch (err) {
-        console.log(ErrorMessages.GET + 'remove' + '==> client: ',taskId,'\n error: ',err)
-        throw new Error(ErrorMessages.GET + 'remove- ' + taskId);
+        console.log(ErrorMessages.SAVE + '==> client: ',taskId,'\n error: ',err)
+        throw new Error(ErrorMessages.SAVE + taskId);
     }
 }
 
@@ -68,11 +68,11 @@ async function save(task: Task) {
     try {
         const method = task.id ? 'put' : 'post'
         const url = BASE_URL_TASK 
-        const { data: savedStory } = await axios[method](url, task)
-        return savedStory
+        const { data: savedTask } = await axios[method](url, task)
+        return savedTask
     }
     catch (err) {
-        console.log(ErrorMessages.GET + 'save' + '==> client: ',task,'\n error: ',err)
-        throw new Error(ErrorMessages.GET + 'save- ' + task);
+        console.log(ErrorMessages.GET + '==> client: ',task,'\n error: ',err)
+        throw new Error(ErrorMessages.GET + task);
     }
 }

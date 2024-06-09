@@ -47,21 +47,22 @@ async function remove(ticketId: string) {
         return res
     }
     catch (err) {
-        console.log(ErrorMessages.GET + 'remove' + '==> client: ',ticketId,'\n error: ',err)
-        throw new Error(ErrorMessages.GET + 'remove- ' + ticketId);
+        console.log(ErrorMessages.DELETE + '==> client: ',ticketId,'\n error: ',err)
+        throw new Error(ErrorMessages.DELETE + ticketId);
     }
 }
 
 async function save(ticket: Ticket) {
     try {
+        console.log("ticketClient: Save: ", ticket)
         const method = ticket.id ? 'put' : 'post'
         const url = BASE_URL_TICKET 
-        const { data: savedStory } = await axios[method](url, ticket)
-        return savedStory
+        const { data: savedTicketId } = await axios[method](url, ticket)
+        return savedTicketId
     }
     catch (err) {
-        console.log(ErrorMessages.GET + 'save' + '==> client: ',ticket,'\n error: ',err)
-        throw new Error(ErrorMessages.GET + 'save- ' + ticket);
+        console.log(ErrorMessages.SAVE + '==> client: ',ticket,'\n error: ',err)
+        throw new Error(ErrorMessages.SAVE + ticket);
     }
 }
 
