@@ -29,10 +29,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case CRUDCodes.PUT :
             try {
-                const { id } = req.query                
-                if (typeof id != 'string')
-                    throw('Illegal id')
-                const updatedTicket = await ticketServer.updateTicket(id, req.body);
+                console.log("Ticket Request:", {method: req.method, /*headers: req.headers,*/ body: req.body, query: req.query})
+                const { _id } = req.body                
+                if (typeof _id != 'string')
+                    throw('Illegal id ID = ' + _id)
+                const updatedTicket = await ticketServer.updateTicket(_id, req.body);
                 res.status(StatusCodes.OK).json(updatedTicket);
             }
             catch(err) {
@@ -42,10 +43,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case CRUDCodes.DELETE :  
             try {
-                const { id } = req.query
-                if (typeof id != 'string')
-                    throw('Illegal id')
-                const newTicket = await ticketServer.deleteTicket(id);
+                const { _id } = req.body
+                if (typeof _id != 'string')
+                    throw('Illegal id ID = ' + _id)
+                const newTicket = await ticketServer.deleteTicket(_id);
                 res.status(StatusCodes.NO_CONTENT).end();
             }
             catch(err) {

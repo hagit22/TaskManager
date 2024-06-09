@@ -47,6 +47,15 @@ export default function TaskManagerApp({ loadedTickets, defaultDateFilter } :
     }
   }
 
+  async function onUpdateTicket(updatedTicket: Ticket) {
+    try {
+      const savedTicket = await ticketClient.save(updatedTicket)
+    }
+    catch(err) {
+      console.log("onUpdateTicket Error: ",err)
+    }
+  }
+
   return (
     <section className="taskManager">
       <div className="control">
@@ -55,7 +64,7 @@ export default function TaskManagerApp({ loadedTickets, defaultDateFilter } :
       </div>
       {tickets==null ? '' : tickets.length == 0 ?  
         <img src='/img/all-done.jpg' className="allDone"/> :
-        <TicketsContainer tickets={tickets}/>
+        <TicketsContainer tickets={tickets} onUpdateTicket={onUpdateTicket}/>
       }
     </section>
   )

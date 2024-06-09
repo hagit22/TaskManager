@@ -52,8 +52,8 @@ export interface Task {
 }
 
 export enum TaskStatus {
-    New,
-    InProgress,
-    Done
+    New = "New",
+    InProgress = "In Progress",
+    Done = "Done"
 }
 

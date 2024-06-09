@@ -58,6 +58,9 @@
             flex: 1;
         }
     }    
+    .isDisabled {
+        color: lightgray;
+    }
     select {
         padding: 8px;
         font-size: 14px;
@@ -87,6 +90,12 @@
     }
     .bug:hover {
         background-color: $color-bug-hover;
+    }
+    .task {
+        background-color: $color-title-outline;
+    }
+    .task:hover {
+        background-color: $color-title-hover;
     }
 }
   

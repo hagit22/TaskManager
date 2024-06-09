@@ -35,7 +35,7 @@ async function getTasksForTicket(ticket: Partial<Ticket>) {
             owner: ticket.owner || defaultTicket.owner,
             status: _getNewTaskStatus(ticket.status),
             priority: ticket.priority || defaultTicket.priority,
-            ticketId: ticket.id || '-1' //defaultTicket.id
+            ticketId: ticket.id || defaultTicket.id
         })
     }
     //console.log(JSON.stringify(tasks, null, 2))

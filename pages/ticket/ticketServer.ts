@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { LoremIpsum } from "lorem-ipsum";
 import { DateRange, utilities } from "../../app/utils/utilities"
 import { genData } from "../../app/utils/dataGenUtil"
@@ -36,7 +37,6 @@ async function getTickets(filterBy: DateRange) {
   
 async function createTicket (ticket: Ticket) {
     try {
-        console.log("\n\n****** Got Create Ticket: ******\n\n", ticket)
         const collection = await dbService.getCollection(COLLECTION)
         const { acknowledged, insertedId } = await collection.insertOne(ticket)
         return acknowledged ? insertedId : `Did not add ticket`
@@ -48,6 +48,28 @@ async function createTicket (ticket: Ticket) {
 }
 
 async function updateTicket (id: string, ticket: Ticket) {
+    try {
+        const collection = await dbService.getCollection(COLLECTION)
+        let ticketFields = {
+            title: ticket.title,
+            description: ticket.description,
+            owner: ticket.owner,
+            dueDate: ticket.dueDate,
+            status: ticket.status,
+            priority: ticket.priority,
+            TicketCategory: ticket.ticketCategory
+        }
+        const ticketObject = ticket as any
+        const ticketUpdate = {...ticketFields, tasks: [...ticketObject.tasks]}
+        console.log("ticketServer: updateTicket - ",ticketUpdate)
+        
+        const { acknowledged } = await collection.updateOne({ _id: id }, { $set: ticketUpdate })
+        return acknowledged ? ticket : `Did not update ticket` 
+    }   
+    catch(err) {
+        console.log("ticketServer: Had problems updating tickets ",err)
+        throw err
+    }
 }
 
 async function deleteTicket (id: string) {

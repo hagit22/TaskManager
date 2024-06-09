@@ -2,26 +2,31 @@
 
 import React, { useState, useEffect } from 'react'
 import { genData } from '../utils/dataGenUtil';
-import { Ticket, TicketCategory, TicketStatus } from '@/pages/common/appTypes';
+import { Ticket, TicketCategory, TicketStatus, Task, TaskStatus } from '@/pages/common/appTypes';
 import { utilities } from '../utils/utilities';
 import styles from './form-modal.module.scss';
 
-export default function TicketForm({ initialTicket, ticketType, onAddNewTicket, onClose }: 
-    { initialTicket: Ticket; ticketType: TicketCategory; onAddNewTicket: (ticket: Ticket) => void; onClose: () => void } ) {
+export default function TicketForm({ initialTicket, ticketType, onAddNewTicket, onAddNewTask, onClose }: 
+    { initialTicket: Ticket; ticketType: TicketCategory; 
+    onAddNewTicket: (ticket: Ticket) => void; onAddNewTask: (task: Task) => void; onClose: () => void } ) {
   
     const [ticket, setTicket] = useState(initialTicket)
 
     useEffect(() => {
-        if (!ticket.ticketCategory)
+        if (ticketType == TicketCategory.None)
             return
-        console.log("New Ticket: ", ticket)        
-        onAddNewTicket(ticket)
-        onClose()
-    }, [ticket.ticketCategory])
+        setTicket(prev => ({...prev, ticketCategory: ticketType}));
+    }, [])
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setTicket(prev => ({...prev, ticketCategory: ticketType}));
+        if (ticketType == TicketCategory.None) {
+            const newTask = ticket as any
+            onAddNewTask(newTask)  
+        }
+        else     
+            onAddNewTicket(ticket)
+        onClose()
     };
 
     const onChangeInput = ({ target }: React.ChangeEvent<HTMLInputElement> ) => {
@@ -57,7 +62,7 @@ export default function TicketForm({ initialTicket, ticketType, onAddNewTicket, 
             </label>
             <label>
                 Textarea:
-                ks<textarea id="description" value={ticket.description} onChange={onChangeTextarea} />
+                <textarea id="description" value={ticket.description} onChange={onChangeTextarea} />
             </label>
             <div className={styles.inputRow}>
                 <label>
@@ -78,24 +83,29 @@ export default function TicketForm({ initialTicket, ticketType, onAddNewTicket, 
                 </label>
             </div>
             <div className={styles.inputRow}>
-                <label>
+                <label className={ticketType == TicketCategory.None ? styles.isDisabled : ''}>
                     Due Date:
-                    <input type="date" id="dueDate" value={utilities.formatDate(ticket.dueDate)} onChange={onChangeInput} />
+                    <input type="date" id="dueDate" value={utilities.formatDate(ticket.dueDate)} onChange={onChangeInput} 
+                        disabled={ticketType == TicketCategory.None ? true : false}/>
                 </label>
                 <label>
                     Status:
                     <select id="status" value={ticket.status} onChange={onChangeSelect}>
                         <option value="" disabled>Select status</option>
-                        {Object.values(TicketStatus).map((status: TicketStatus | string, index: number) => (
+                        {ticketType == TicketCategory.None ? 
+                        Object.values(TaskStatus).map((status: TaskStatus | string, index: number) => (
+                            <option value={status} key={index}>{status}</option>)) :
+                        Object.values(TicketStatus).map((status: TicketStatus | string, index: number) => (
                             <option value={status} key={index}>{status}</option>))}
                     </select>
                 </label>
             </div>
             <button type="submit" 
-                className={`styles.button ${ticketType==TicketCategory.Bug ? styles.bug : styles.ticket}`}>
-                    Submit
+                className={`${styles.button} ${ticketType == TicketCategory.Bug ? styles.bug : 
+                    ticketType == TicketCategory.Ticket ? styles.ticket : styles.task}`}>
+                        Submit
             </button>
-        </form>
+        </form> 
     );
 }
 

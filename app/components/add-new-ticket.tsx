@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, ChangeEvent } from 'react'
-import { Ticket, TicketCategory, getDefaultTicket } from '../../pages/common/appTypes'
+import { Ticket, TicketCategory, getDefaultTicket, Task } from '../../pages/common/appTypes'
 import Modal from './modal'
 import TicketForm from './ticket-form'
 import styles from './controls.module.scss'
@@ -28,6 +28,8 @@ export default function AddNewTicket({ onAddNewTicket } : { onAddNewTicket: (tic
     setTicketType(TicketCategory.None)
   }
 
+  const onAddNewTask = () => {}
+
   return (
     <section className={styles.controlFrame}>
       <select id="options" value={ticketType} onChange={onTicketTypeChange}>
@@ -37,7 +39,7 @@ export default function AddNewTicket({ onAddNewTicket } : { onAddNewTicket: (tic
       </select>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <TicketForm initialTicket={getDefaultTicket()} ticketType={ticketType} 
-          onAddNewTicket={onAddNewTicket} onClose={closeModal} />
+          onAddNewTicket={onAddNewTicket} onAddNewTask={onAddNewTask} onClose={closeModal} />
       </Modal>
     </section>
   );
